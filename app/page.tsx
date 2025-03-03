@@ -1,101 +1,111 @@
-import Image from "next/image";
+'use client';
+
+import { useState, useEffect } from 'react';
+import AuthForm from './components/auth/AuthForm';
+import PromptList from './components/prompts/PromptList';
+import { getAuthToken, logout } from './lib/auth';
+import { useRouter } from 'next/navigation';
+import { AppShell, Container, Button, Group, Title, rem } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { IconPencilPlus, IconLogout } from '@tabler/icons-react';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  useEffect(() => {
+    setIsAuthenticated(!!getAuthToken());
+  }, []);
+
+  const handleAuthSuccess = () => {
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    logout();
+    setIsAuthenticated(false);
+    notifications.show({
+      title: 'Success',
+      message: 'Logged out successfully',
+      color: 'green'
+    });
+  };
+
+  return (
+    <AppShell
+      header={{ height: 60 }}
+      padding="md"
+      styles={{
+        main: {
+          background: 'var(--mantine-color-gray-0)',
+        },
+      }}
+    >
+      <AppShell.Header>
+        <Container size="xl" h="100%">
+          <Group h="100%" px="md" justify="space-between">
+            <Title
+              order={3}
+              c="blue.6"
+              style={{
+                fontWeight: 500,
+                letterSpacing: '-0.01em',
+              }}
+            >
+              Prompt Library
+            </Title>
+            <Group>
+              {isAuthenticated && (
+                <>
+                  <Button
+                    variant="light"
+                    onClick={() => router.push('/prompts/new')}
+
+                    styles={{
+                      root: {
+                        backgroundColor: 'var(--mantine-color-blue-0)',
+                        color: 'var(--mantine-color-blue-6)',
+                        '&:hover': {
+                          backgroundColor: 'var(--mantine-color-blue-1)',
+                        },
+                      },
+                    }}
+                  >
+                    Create New Prompt
+                    
+                  </Button>
+                  <Button
+                    variant="subtle"
+                    onClick={handleLogout}
+                    
+                    color="gray"
+                    styles={{
+                      root: {
+                        '&:hover': {
+                          backgroundColor: 'var(--mantine-color-gray-1)',
+                        },
+                      },
+                    }}
+                  >
+                    <IconLogout stroke={1.5} />
+                    Logout
+                  </Button>
+                </>
+              )}
+            </Group>
+          </Group>
+        </Container>
+      </AppShell.Header>
+
+      <AppShell.Main>
+        {!isAuthenticated ? (
+          <Container size="sm">
+            <AuthForm onSuccess={handleAuthSuccess} />
+          </Container>
+        ) : (
+          <PromptList />
+        )}
+      </AppShell.Main>
+    </AppShell>
   );
 }

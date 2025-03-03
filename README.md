@@ -1,36 +1,125 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Prompt Library
+
+A web application for creating, storing, and managing AI prompts. Built with Next.js, TypeScript, and Mantine UI.
+
+![Prompt Library Screenshot](public/screenshot.png) <!-- You may want to add an actual screenshot image later -->
+
+## Features
+
+- User authentication
+- Create, read, update, and delete prompts
+- Responsive design built with Mantine UI components
+- TypeScript for type safety
+- Tailwind CSS for styling
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js 18.x or higher
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/prompt-library.git
+   cd prompt-library
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Set up environment variables:
+   Create a `.env.local` file in the root directory with the following variables:
+   ```
+   MONGODB_URI=your_mongodb_connection_string
+   JWT_SECRET=your_jwt_secret_key
+   ```
+
+4. Run the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
+
+## Project Structure
+
+```
+app/
+  components/        # Reusable UI components
+    auth/            # Authentication related components
+    prompts/         # Prompt management components
+  lib/               # Utility functions and API services
+  prompts/           # Prompt-related pages
+    [id]/            # View/delete specific prompt
+    edit/[id]/       # Edit specific prompt
+    new/             # Create new prompt
+  page.tsx           # Main application page
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Contributing
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+We welcome contributions to the Prompt Library! Here's how you can contribute:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Setting Up the Development Environment
 
-## Learn More
+1. Fork the repository
+2. Clone your fork:
+   ```bash
+   git clone https://github.com/your-username/prompt-library.git
+   cd prompt-library
+   ```
+3. Create a new branch:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+4. Make your changes and commit them:
+   ```bash
+   git commit -m "Add your descriptive commit message"
+   ```
+5. Push to your fork:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+6. Create a Pull Request from your fork to the main repository
 
-To learn more about Next.js, take a look at the following resources:
+### Contribution Guidelines
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Code Style**: Follow the existing code style and formatting
+- **TypeScript**: Use proper TypeScript types for all new code
+- **Testing**: Add tests for new features when possible
+- **Documentation**: Update documentation for any changes to the API or features
+- **Commit Messages**: Use clear, descriptive commit messages
+- **Pull Requests**: Keep PRs focused on a single feature or bug fix
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Code Review Process
 
-## Deploy on Vercel
+1. All submissions require review before being merged
+2. Feedback may be given for improvements or changes
+3. Once approved, your changes will be merged into the main branch
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Issue Reporting
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+If you find a bug or want to request a new feature:
+
+1. Check existing issues to avoid duplicates
+2. Open a new issue with a clear title and detailed description
+3. For bugs, include steps to reproduce, expected behavior, and actual behavior
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- [Next.js](https://nextjs.org/) - The React framework
+- [Mantine UI](https://mantine.dev/) - UI component library
+- [TailwindCSS](https://tailwindcss.com/) - CSS framework
